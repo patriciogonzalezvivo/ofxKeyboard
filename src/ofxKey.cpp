@@ -58,7 +58,7 @@ void ofxKey::update(){
 void ofxKey::draw(){
 	update();
 	
-	int fg,bg;
+	ofColor fg,bg;
 	
 	if (pressed) {
 		fg = *backgroundColor;
@@ -74,12 +74,14 @@ void ofxKey::draw(){
 		
 		ofSetColor(bg);
 		ofFill();
-		rBox();
-	
+//		rBox();
+        ofRectRounded(-width*0.5, -height*0.5, width, height, 5);
+    
 		ofNoFill();
 		ofSetLineWidth(2);
 		ofSetColor(fg);
-		rBox();
+//		rBox();
+        ofRectRounded(-width*0.5, -height*0.5, width, height, 5);
 	
 		ofFill();
 		ofSetColor(fg);
@@ -124,8 +126,8 @@ void ofxKey::rBox(){
 }
 
 
-bool ofxKey::isOver(Vec2f _location){
-	Vec2f dirToCenter = position - _location;
+bool ofxKey::isOver(ofPoint _location){
+	ofPoint dirToCenter = position - _location;
 	float theta = atan2(dirToCenter.x,dirToCenter.y)-(PI/2);
 	float r = dirToCenter.length();
 	float x = r * cos(theta + *keyboardNorth);

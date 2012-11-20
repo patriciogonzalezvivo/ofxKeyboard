@@ -32,10 +32,7 @@
 #ifndef _ofxKEY
 #define _ofxKEY
 
-#include "MSACore.h"			//  Using MSACore addon made by Memo Akten, www.memo.tv
-
-
-using namespace MSA;
+#include "ofMain.h"
 
 class ofxKey{
 private:
@@ -47,7 +44,7 @@ public:
 	string letter;
 	
 	float radio, angle;				// Polar position (radio, angle)
-	Vec2f position;					// Cartesian Position (x,y)
+	ofPoint position;					// Cartesian Position (x,y)
 	
 	float width,height;				// Width and Height of the key
 	
@@ -59,23 +56,23 @@ public:
 	ofTrueTypeFont * font;		
 	void setFont(ofTrueTypeFont * _font){font = _font;};
 	
-	Vec2f * keyboardCenter;
-	void setKeyboardCenter(Vec2f * _keyboardCenter){keyboardCenter = _keyboardCenter;};
+	ofPoint * keyboardCenter;
+	void setKeyboardCenter(ofPoint * _keyboardCenter){keyboardCenter = _keyboardCenter;};
 	
 	float * keyboardNorth;
 	void setKeyboardNorth(float * _keyboardNorth){keyboardNorth = _keyboardNorth;};
 	
-	const int * foregroundColor;
-	const int * backgroundColor;
-	void setColors(const int * _foregroundColor, const int * _backgroundColor ){ foregroundColor = _foregroundColor; backgroundColor = _backgroundColor;};
+	const ofColor * foregroundColor;
+	const ofColor * backgroundColor;
+	void setColors(const ofColor * _foregroundColor, const ofColor * _backgroundColor ){ foregroundColor = _foregroundColor; backgroundColor = _backgroundColor;};
 	
 	//	This information is important for making new keyboard map.
 	//	Don´t mess with them unless you want to make your own boards.
-	void setRadio(Vec2f _position){	radio = _position.distance(*keyboardCenter);};
-	void setAngle(Vec2f _position){ _position -= *keyboardCenter; angle = ( (-1*atan2(_position.x,_position.y)+(PI/2) - *keyboardNorth)); };
+	void setRadio(ofPoint _position){	radio = _position.distance(*keyboardCenter);};
+	void setAngle(ofPoint _position){ _position -= *keyboardCenter; angle = ( (-1*atan2(_position.x,_position.y)+(PI/2) - *keyboardNorth)); };
 	
-	void moveTo(int _x, int _y){moveTo(Vec2f(_x,_y));};
-	void moveTo(Vec2f _location){ setRadio(_location); setAngle(_location); };
+	void moveTo(int _x, int _y){moveTo(ofPoint(_x,_y));};
+	void moveTo(ofPoint _location){ setRadio(_location); setAngle(_location); };
 	
 	void update();					// Recalculate the position and angle of the key from the center and rotation of the keyboard
 	
@@ -83,8 +80,8 @@ public:
 	
 	// Checkers. someday this will become events
 	bool pressed;
-	bool isOver(int _x, int _y){isOver(Vec2f(_x,_y));};
-	bool isOver(Vec2f _location);
+	bool isOver(int _x, int _y){isOver(ofPoint(_x,_y));};
+	bool isOver(ofPoint _location);
 };
 
 #endif

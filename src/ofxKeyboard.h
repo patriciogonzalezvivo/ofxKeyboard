@@ -40,48 +40,25 @@
 #include "ofxTuio.h"
 #endif
 
-#include "MSACore.h"			//  Using MSACore addon made by Memo Akten, www.memo.tv
-
 #include "ofxKey.h"
 
 #include <iostream>
 #include <fstream>
 
-using namespace MSA;
-
 struct tCursor {
 	int	idN;
-	Vec2f loc;
+	ofPoint loc;
 };
 
-class ofxKeyboard{
-private:	
-	void	rBox();								// Draws a rounded box (Mac style)
-	
+class ofxKeyboard{	
 public:
-	int		nKeys;								// Number of loaded keys 
-	ofxKey	keys[200];							// Array of keys
-	int		cKey;								// Position on the array of the selected key
-	
-	Vec2f	position;							// Cartesian coordinates of the center of the keyboard
-	float	angle;								// The keyboard could be rotated. Because is constructed using polar geometry it won´t lose funtionality
-	
-	float	width,height;						// Width and Height of the keyboard
-	int		foregroundColor,backgroundColor;	// Hexcode of the fore and background
-	
-	ofTrueTypeFont font;
-	
-	ofEvent<string> keyPressed;					// Key Event
-
-	ofEvent<float>  scaling;
-	ofEvent<float>	rotation;
-	ofEvent<Vec2f>	moving;
 	
 	ofxKeyboard();
 	
 	// Initial setup. It must be set before updating or drawing;
 	void loadmap(const string& filePath);
 	void loadfont(const string& fontPath){font.loadFont(fontPath,15,true,true,true);};
+    void savemap(const string& filePath);
 	
 	// Acctions
 	void rotate(float _angle){ angle += _angle;};
@@ -92,30 +69,50 @@ public:
 	void addKey(string _letter, int _x, int _y, int _width, int _height);				// Pass the cartesian x and y cordinates of the screen
 	void moveKeyTo(int _indexKey, int _x, int _y ){ keys[_indexKey].moveTo(_x,_y); };	// Pass the cartesian x and y cordinates of the screen
 	void moveCurrentKeyTo(int _x, int _y ){ keys[cKey].moveTo(_x,_y); };
-	void savemap(const string& filePath);
 	
 	// Checks things
-	bool isOver(Vec2f _loc);
-	bool isOver(int _x, int _y){isOver(Vec2f(_x,_y));};
+	bool isOver(ofPoint _loc);
+	bool isOver(int _x, int _y){isOver(ofPoint(_x,_y));};
 	
-	bool isOnBorder(Vec2f _loc);
-	bool isOnBorder(int _x, int _y){isOnBorder(Vec2f(_x,_y));};
+	bool isOnBorder(ofPoint _loc);
+	bool isOnBorder(int _x, int _y){isOnBorder(ofPoint(_x,_y));};
 	
-	bool checkKeys(Vec2f _loc);
-	bool checkKeys(int _x, int _y){checkKeys(Vec2f(_x,_y));};
+	bool checkKeys(ofPoint _loc);
+	bool checkKeys(int _x, int _y){checkKeys(ofPoint(_x,_y));};
 	
 #ifdef USE_TUIO
-	myTuioClient * tuioClient;
-	void	setTuioClient (myTuioClient * _tuioClient);
-	
-	vector<tCursor>	cursorsOnBorder;
-	Vec2f	oldLoc[3];
+	ofxTuioClient * tuioClient;
+	void	setTuioClient (ofxTuioClient * _tuioClient);
 	
 	// TUIO Events Handlers
 	void	tuioAdded(ofxTuioCursor & tuioCursor);
 	void	tuioRemoved(ofxTuioCursor & tuioCursor);
 	void	tuioUpdated(ofxTuioCursor & tuioCursor);
+    
+    vector<tCursor>	cursorsOnBorder;
+	ofPoint        oldLoc[3];
 #endif
+    
+    int		nKeys;								// Number of loaded keys
+	ofxKey	keys[200];							// Array of keys
+	int		cKey;								// Position on the array of the selected key
+	
+	ofPoint	position;							// Cartesian coordinates of the center of the keyboard
+	float	angle;								// The keyboard could be rotated. Because is constructed using polar geometry it won´t lose funtionality
+	
+	float	width,height;						// Width and Height of the keyboard
+	ofColor	foregroundColor,backgroundColor;	// Hexcode of the fore and background
+	
+	ofTrueTypeFont  font;
+	
+	ofEvent<string> keyPressed;					// Key Event
+    
+	ofEvent<float>      scaling;
+	ofEvent<float>      rotation;
+	ofEvent<ofPoint>	moving;
+
+private:
+	void	rBox();
 };
 
 #endif
