@@ -74,13 +74,11 @@ void ofxKey::draw(){
 		
 		ofSetColor(bg);
 		ofFill();
-//		rBox();
         ofRectRounded(-width*0.5, -height*0.5, width, height, 5);
     
 		ofNoFill();
 		ofSetLineWidth(2);
 		ofSetColor(fg);
-//		rBox();
         ofRectRounded(-width*0.5, -height*0.5, width, height, 5);
 	
 		ofFill();
@@ -89,42 +87,6 @@ void ofxKey::draw(){
 		font->drawString(letter, -font->stringWidth(letter)*0.5, font->stringHeight(letter)*0.35);//(height/10)*1.3);
     ofPopMatrix();
 }
-
-void ofxKey::rBox(){
-	float a = height/6;
-	float b = a/4;
-	
-	float W = width/2;
-	float H = height/2;
-	
-	ofBeginShape(); 
-	ofVertex(		W -a,	-H );
-    
-	ofBezierVertex( W -b ,	-H,
-					W    ,	-H +b, 
-					W    ,	-H +a);
-	
-	ofVertex(       W    ,	H -a);
-    
-	ofBezierVertex( W    ,	H -b,
-					W -b ,	H,
-					W -a ,	H);
-	
-	ofVertex(       -W +a , H );
-    
-	ofBezierVertex( -W +b , H,
-					-W    , H -b,
-					-W    , H -a );
-	
-	ofVertex(       -W    , -H +a );
-    
-	ofBezierVertex( -W    ,	-H +b,
-					-W +b , -H,
-					-W +a , -H );
-	ofVertex(		W -a,	-H );
-	ofEndShape();
-}
-
 
 bool ofxKey::isOver(ofPoint _location){
 	ofPoint dirToCenter = position - _location;

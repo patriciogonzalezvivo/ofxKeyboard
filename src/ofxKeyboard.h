@@ -110,9 +110,6 @@ public:
 	ofEvent<float>      scaling;
 	ofEvent<float>      rotation;
 	ofEvent<ofPoint>	moving;
-
-private:
-	void	rBox();
 };
 
 #endif

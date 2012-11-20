@@ -116,43 +116,6 @@ void ofxKeyboard::draw(){
 	for(int i = 0; i < nKeys; i++)
 		keys[i].draw();
 }
-
-
-void ofxKeyboard::rBox(){
-	float a = height/12;
-	float b = a/6;
-	
-	float W = width/2;
-	float H = height/2;
-	
-	ofBeginShape(); 
-	ofVertex(		W -a,	-H );
-    
-	ofBezierVertex( W -b ,	-H,
-					W    ,	-H +b, 
-					W    ,	-H +a);
-	
-	ofVertex(       W    ,	H -a);
-    
-	ofBezierVertex( W    ,	H -b,
-					W -b ,	H,
-					W -a ,	H);
-	
-	ofVertex(       -W +a , H );
-    
-	ofBezierVertex( -W +b , H,
-					-W    , H -b,
-					-W    , H -a );
-	
-	ofVertex(       -W    , -H +a );
-    
-	ofBezierVertex( -W    ,	-H +b,
-					-W +b , -H,
-					-W +a , -H );
-	ofVertex(		W -a,	-H );
-	ofEndShape();
-}
-
 void ofxKeyboard::addKey(string _letter, int _x, int _y, int _width, int _height){
 	ofxKey k = ofxKey(_letter, 0, 0, _width, _height);
 	k.setFont(&font);
