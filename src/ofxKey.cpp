@@ -49,6 +49,16 @@ ofxKey::ofxKey(string _letter, float _radio, float _angle, float _width, float _
 	scaleH = 1/height;
 }
 
+void ofxKey::scale(float _scale){
+    width *= _scale;
+    height *= _scale;
+    radio *= _scale;
+    
+    position.x = radio * cos(angle + *keyboardNorth);
+	position.y = radio * sin(angle + *keyboardNorth);
+	position += *keyboardCenter;
+}
+
 void ofxKey::update(){	
 	position.x = radio * cos(angle + *keyboardNorth);
 	position.y = radio * sin(angle + *keyboardNorth);
@@ -58,16 +68,11 @@ void ofxKey::update(){
 void ofxKey::draw(){
 	update();
 	
-	ofColor fg,bg;
-	
-	if (pressed) {
-		fg = *backgroundColor;
-		bg = *foregroundColor;
-	} else {
-		fg = *foregroundColor;
-		bg = *backgroundColor;
-	}
-	
+    if (pressed){
+        fg.lerp(*foregroundColor, 0.1);
+        bg.lerp(*backgroundColor, 0.1);
+    }
+    
 	ofPushMatrix();
 		ofTranslate(position.x, position.y);
 		ofRotateZ(ofRadToDeg(*keyboardNorth));
@@ -95,9 +100,15 @@ bool ofxKey::isOver(ofPoint _location){
 	float x = r * cos(theta + *keyboardNorth);
 	float y = r * sin(theta + *keyboardNorth);
 	
-	//if (position.distance(_location) <= width/2) pressed = true;
-	if ( (x <= width/2) && (x >= -width/2) && (y <= height/2) && (y >= -height/2)) pressed = true;
-	else pressed = false;
-	
+	if ( (x <= width/2) && (x >= -width/2) && (y <= height/2) && (y >= -height/2)){
+        fg = *backgroundColor;
+		bg = *foregroundColor;
+        pressed = true;
+	} else {
+        fg = *foregroundColor;
+		bg = *backgroundColor;
+        pressed = false;
+	}
+    
 	return pressed;
 }

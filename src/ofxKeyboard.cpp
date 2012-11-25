@@ -87,9 +87,7 @@ void ofxKeyboard::resize(float _resize){
 	height *= _resize;
 	
 	for (int i = 0; i < nKeys; i++){
-		keys[i].radio *= _resize;
-		keys[i].width *= _resize;
-		keys[i].height *= _resize;
+		keys[i].scale(_resize);
 		keys[i].update();
 	}	
 }
@@ -102,7 +100,6 @@ void ofxKeyboard::draw(){
 	
 		ofFill();
 		ofSetColor(backgroundColor);
-//		rBox();
     
     ofRectRounded(-width*0.5, -height*0.5, width, height, 20);
 	
@@ -110,7 +107,6 @@ void ofxKeyboard::draw(){
 		ofSetLineWidth(2);
 		ofSetColor(foregroundColor);
     ofRectRounded(-width*0.5, -height*0.5, width, height, 20);
-//		rBox();
 	ofPopMatrix();
 	
 	for(int i = 0; i < nKeys; i++)
@@ -187,7 +183,7 @@ void ofxKeyboard::tuioAdded(ofxTuioCursor &tuioCursor){
 	ofPoint loc = ofPoint(tuioCursor.getX()*ofGetWidth(),tuioCursor.getY()*ofGetHeight());
 	
 	if (isOver(loc))					// IF the cursor is over the keyboard
-		if (!checkKeys(loc)){			// ... and it´s not pressing a key
+		if (!checkKeys(loc)){			// ... and is not pressing a key
 			//if (isOnBorder(loc)){		// ... and wish location is near the borders 
 				tCursor c;
 				c.idN = tuioCursor.getSessionId();

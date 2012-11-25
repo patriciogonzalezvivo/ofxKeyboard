@@ -35,53 +35,55 @@
 #include "ofMain.h"
 
 class ofxKey{
-private:
-	void rBox();					// Draw the round box corner
-	float scaleW;
-	float scaleH;
-	
 public:
-	string letter;
-	
-	float radio, angle;				// Polar position (radio, angle)
-	ofPoint position;					// Cartesian Position (x,y)
-	
-	float width,height;				// Width and Height of the key
-	
-	// Contructors
+
 	ofxKey();
 	ofxKey(string _s, float _rad, float _ang, float _w, float _h);
 	
 	// Initial Setup. Must be set before draw!
-	ofTrueTypeFont * font;		
+	//
 	void setFont(ofTrueTypeFont * _font){font = _font;};
-	
-	ofPoint * keyboardCenter;
 	void setKeyboardCenter(ofPoint * _keyboardCenter){keyboardCenter = _keyboardCenter;};
-	
-	float * keyboardNorth;
 	void setKeyboardNorth(float * _keyboardNorth){keyboardNorth = _keyboardNorth;};
-	
-	const ofColor * foregroundColor;
-	const ofColor * backgroundColor;
 	void setColors(const ofColor * _foregroundColor, const ofColor * _backgroundColor ){ foregroundColor = _foregroundColor; backgroundColor = _backgroundColor;};
 	
 	//	This information is important for making new keyboard map.
-	//	Don´t mess with them unless you want to make your own boards.
+    //
 	void setRadio(ofPoint _position){	radio = _position.distance(*keyboardCenter);};
 	void setAngle(ofPoint _position){ _position -= *keyboardCenter; angle = ( (-1*atan2(_position.x,_position.y)+(PI/2) - *keyboardNorth)); };
-	
 	void moveTo(int _x, int _y){moveTo(ofPoint(_x,_y));};
 	void moveTo(ofPoint _location){ setRadio(_location); setAngle(_location); };
 	
-	void update();					// Recalculate the position and angle of the key from the center and rotation of the keyboard
-	
-	void draw();					// First update. Then draw.
+    //  Transformations
+    //
+    void scale(float _scale);
+	void update();
+	void draw();
 	
 	// Checkers. someday this will become events
-	bool pressed;
+    //
 	bool isOver(int _x, int _y){isOver(ofPoint(_x,_y));};
 	bool isOver(ofPoint _location);
+    
+    string letter;
+    float radio, angle;     // Polar position (radio, angle)
+	float width, height;    // Width and Height of the key
+    
+    bool pressed;
+    
+private:
+    ofColor fg,bg;
+    ofPoint position;       // Cartesian Position (x,y)
+
+    float scaleW;
+	float scaleH;
+    
+    ofTrueTypeFont  *font;
+    const ofColor   *foregroundColor,
+                    *backgroundColor;
+    ofPoint         *keyboardCenter;
+    float           *keyboardNorth;
+    
 };
 
 #endif

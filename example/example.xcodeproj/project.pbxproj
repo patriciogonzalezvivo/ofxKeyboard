@@ -233,9 +233,9 @@
 			isa = PBXGroup;
 			children = (
 				de8871f2c5e6440f92d326d3075c7193 /* ofxKeyboard.h */,
-				b818ff175467b29eee27b48a304acc5d /* ofxKey.cpp */,
-				5797213408376b4ed61bc0cc9968bc44 /* ofxKey.h */,
 				df367c58151b90068d7733b3d34249bd /* ofxKeyboard.cpp */,
+				5797213408376b4ed61bc0cc9968bc44 /* ofxKey.h */,
+				b818ff175467b29eee27b48a304acc5d /* ofxKey.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
